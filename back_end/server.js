@@ -5,13 +5,15 @@ const app = express();
 
 app.use(express.json());
 
-// Import models
-const User = require("./models/User");
+const User = require("./models/user");
 const Child = require("./models/Child");
 const Vaccine = require("./models/Vaccine");
 const Reminder = require("./models/Reminder");
 
-// Connect to MongoDB
+const userRoutes = require("./routes/userRoutes");
+
+app.use("/api/users", userRoutes);
+
 mongoose.connect("mongodb://127.0.0.1:27017/e_vaccine_reminder")
     .then(() => {
         console.log("MongoDB connected successfully");
@@ -25,7 +27,6 @@ mongoose.connect("mongodb://127.0.0.1:27017/e_vaccine_reminder")
         console.log(error);
     });
 
-// Test API
 app.get("/", (req, res) => {
     res.send("E-Vaccine Reminder API is working");
 });

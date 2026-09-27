@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - E-Vaccine Reminder</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- Navigation Bar -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            E-Vaccine Reminder
+        </div>
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="#" id="logoutButton">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Dashboard -->
+
+    <main class="dashboard-container">
+
+
+        <!-- Welcome -->
+
+        <section class="dashboard-header">
+
+            <h1 id="welcomeMessage">
+                Welcome!
+            </h1>
+
+            <p>
+                Manage your child's vaccination information
+                and reminders.
+            </p>
+
+        </section>
+
+
+        <!-- Add Child -->
+
+        <section class="dashboard-card">
+
+            <h2>
+                Add Child
+            </h2>
+
+            <form id="childForm">
+
+                <div class="form-group">
+
+                    <label for="childName">
+                        Child Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="childName"
+                        placeholder="Enter child's name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="dateOfBirth">
+                        Date of Birth
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dateOfBirth"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="gender">
+                        Gender
+                    </label>
+
+                    <select id="gender" required>
+
+                        <option value="">
+                            Select Gender
+                        </option>
+
+                        <option value="Male">
+                            Male
+                        </option>
+
+                        <option value="Female">
+                            Female
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn"
+                >
+                    Add Child
+                </button>
+
+
+                <p id="childMessage"></p>
+
+            </form>
+
+        </section>
+
+
+        <!-- Children -->
+
+        <section class="dashboard-card">
+
+            <div class="section-heading">
+
+                <h2>
+                    My Children
+                </h2>
+
+                <button
+                    class="small-btn"
+                    id="refreshChildren"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+
+            <div id="childrenList">
+
+                <p>
+                    Loading children...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Vaccines -->
+
+        <section class="dashboard-card">
+
+            <div class="section-heading">
+
+                <h2>
+                    Available Vaccines
+                </h2>
+
+                <button
+                    class="small-btn"
+                    id="refreshVaccines"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+
+            <div id="vaccinesList">
+
+                <p>
+                    Loading vaccines...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Add Reminder -->
+
+        <section class="dashboard-card">
+
+            <h2>
+                Add Vaccine Reminder
+            </h2>
+
+            <form id="reminderForm">
+
+
+                <div class="form-group">
+
+                    <label for="reminderChild">
+                        Select Child
+                    </label>
+
+                    <select
+                        id="reminderChild"
+                        required
+                    >
+
+                        <option value="">
+                            Select Child
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="reminderVaccine">
+                        Select Vaccine
+                    </label>
+
+                    <select
+                        id="reminderVaccine"
+                        required
+                    >
+
+                        <option value="">
+                            Select Vaccine
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="dueDate">
+                        Due Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dueDate"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn"
+                >
+                    Add Reminder
+                </button>
+
+
+                <p id="reminderMessage"></p>
+
+
+            </form>
+
+        </section>
+
+
+        <!-- Reminders -->
+
+        <section class="dashboard-card">
+
+            <div class="section-heading">
+
+                <h2>
+                    My Vaccine Reminders
+                </h2>
+
+                <button
+                    class="small-btn"
+                    id="refreshReminders"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+
+            <div id="remindersList">
+
+                <p>
+                    Loading reminders...
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- JavaScript -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

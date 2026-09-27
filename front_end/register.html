@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register - E-Vaccine Reminder</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- Navigation Bar -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            E-Vaccine Reminder
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Registration Section -->
+
+    <section class="form-section">
+
+        <div class="form-container">
+
+            <h1>
+                Create Account
+            </h1>
+
+            <p class="form-description">
+                Create an account to manage your child's
+                vaccination records.
+            </p>
+
+
+            <!-- Registration Form -->
+
+            <form id="registerForm">
+
+
+                <!-- Name -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="form-group">
+
+                    <label for="registerEmail">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="registerEmail"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="form-group">
+
+                    <label for="registerPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Confirm Password -->
+
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Register Button -->
+
+                <button
+                    type="submit"
+                    class="btn form-button"
+                >
+                    Create Account
+                </button>
+
+
+                <!-- Message -->
+
+                <p id="registerMessage"></p>
+
+
+            </form>
+
+
+            <!-- Login Link -->
+
+            <p class="form-footer">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login here
+                </a>
+
+            </p>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- JavaScript -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

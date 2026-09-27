@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - E-Vaccine Reminder</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- Navigation Bar -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            E-Vaccine Reminder
+        </div>
+
+        <div class="nav-links">
+
+            <a href="#" id="adminLogout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Admin Dashboard -->
+
+    <main class="dashboard-container">
+
+
+        <!-- Welcome -->
+
+        <section class="dashboard-header">
+
+            <h1 id="adminWelcome">
+                Admin Dashboard
+            </h1>
+
+            <p>
+                Manage vaccines and vaccination information.
+            </p>
+
+        </section>
+
+
+        <!-- Add Vaccine -->
+
+        <section class="dashboard-card">
+
+            <h2>
+                Add New Vaccine
+            </h2>
+
+
+            <form id="addVaccineForm">
+
+
+                <div class="form-group">
+
+                    <label for="vaccineName">
+                        Vaccine Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="vaccineName"
+                        placeholder="Enter vaccine name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="vaccineDescription">
+                        Description
+                    </label>
+
+                    <input
+                        type="text"
+                        id="vaccineDescription"
+                        placeholder="Enter description"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="recommendedAge">
+                        Recommended Age
+                    </label>
+
+                    <input
+                        type="text"
+                        id="recommendedAge"
+                        placeholder="Example: At birth"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="doseNumber">
+                        Dose Number
+                    </label>
+
+                    <input
+                        type="number"
+                        id="doseNumber"
+                        placeholder="Enter dose number"
+                        min="1"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn"
+                >
+                    Add Vaccine
+                </button>
+
+
+                <p id="adminMessage"></p>
+
+
+            </form>
+
+        </section>
+
+
+        <!-- Vaccine List -->
+
+        <section class="dashboard-card">
+
+            <div class="section-heading">
+
+                <h2>
+                    Manage Vaccines
+                </h2>
+
+                <button
+                    class="small-btn"
+                    id="refreshAdminVaccines"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+
+            <div id="adminVaccinesList">
+
+                <p>
+                    Loading vaccines...
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- JavaScript -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

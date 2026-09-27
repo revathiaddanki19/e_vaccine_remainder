@@ -1,15 +1,22 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 
 
-// ================= MIDDLEWARE =================
+// ==============================
+// Middleware
+// ==============================
+
+app.use(cors());
 
 app.use(express.json());
 
 
-// ================= MODELS =================
+// ==============================
+// Models
+// ==============================
 
 const User = require("./models/user");
 const Child = require("./models/Child");
@@ -17,7 +24,9 @@ const Vaccine = require("./models/Vaccine");
 const Reminder = require("./models/Reminder");
 
 
-// ================= ROUTES =================
+// ==============================
+// Routes
+// ==============================
 
 const userRoutes = require("./routes/userRoutes");
 const childRoutes = require("./routes/childRoutes");
@@ -26,46 +35,60 @@ const reminderRoutes = require("./routes/reminderRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
 
-// ================= CONNECT ROUTES =================
+// ==============================
+// API Routes
+// ==============================
 
-// User APIs
 app.use("/api/users", userRoutes);
 
-// Child APIs
 app.use("/api/children", childRoutes);
 
-// Vaccine APIs
 app.use("/api/vaccines", vaccineRoutes);
 
-// Reminder APIs
 app.use("/api/reminders", reminderRoutes);
 
-// Admin APIs
 app.use("/api/admin", adminRoutes);
 
 
-// ================= HOME ROUTE =================
+// ==============================
+// Home Route
+// ==============================
 
 app.get("/", (req, res) => {
+
     res.send("E-Vaccine Reminder API is working");
+
 });
 
 
-// ================= MONGODB CONNECTION =================
+// ==============================
+// MongoDB Connection
+// ==============================
 
-mongoose.connect("mongodb://127.0.0.1:27017/e_vaccine_reminder")
-    .then(() => {
+mongoose.connect(
+    "mongodb://127.0.0.1:27017/e_vaccine_reminder"
+)
 
-        console.log("MongoDB connected successfully");
+.then(() => {
 
-        app.listen(5000, () => {
-            console.log("Server running on http://localhost:5000");
-        });
+    console.log("MongoDB connected successfully");
 
-    })
-    .catch((error) => {
 
-        console.log("MongoDB connection failed");
-        console.log(error);
+    app.listen(5000, () => {
+
+        console.log(
+            "Server running on http://localhost:5000"
+        );
 
     });
+
+})
+
+
+.catch((error) => {
+
+    console.log("MongoDB connection failed");
+
+    console.log(error);
+
+});

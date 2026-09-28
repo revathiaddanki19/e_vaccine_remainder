@@ -1,0 +1,17 @@
+$kind: http-request
+name: http://localhost:5000/api/users/login
+description: ""
+url: http://localhost:5000/api/users/login
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"email\": \"bcrypt@gmail.com\",\r
+
+    \    \"password\": \"123456\"\r
+
+    }"
+auth:
+  type: noauth
+order: 1790506497685

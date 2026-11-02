@@ -421,120 +421,101 @@ if (childForm) {
 // ========================================
 
 async function loadChildren() {
-
-    const childrenList =
-        document.getElementById("childrenList");
-
+    const childrenList = document.getElementById("childrenList");
 
     if (!childrenList) {
+        console.log("Children list element not found!");
         return;
     }
 
-
-    const user = getUser();
-
-    const token = getToken();
-
-
-    if (!user || !token) {
-        return;
-    }
-
+    childrenList.textContent = "Loading children...";
 
     try {
+        const token = localStorage.getItem("token");
 
-       const response = await fetch(
-
-    API_URL +
-    "/api/children/view",
-
-    {
-        method: "GET",
-
-        headers: {
-            "Authorization":
-                "Bearer " + token
+        if (!token) {
+            childrenList.textContent = "Please login again.";
+            console.log("Login token not found!");
+            return;
         }
-    }
-);
 
+        console.log("Fetching children from backend...");
+
+        const response = await fetch(`${API_URL}/api/children/view`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache"
+            }
+        });
+
+        console.log("Children API status:", response.status);
 
         const data = await response.json();
 
+        console.log("Children API response:", data);
 
         if (!response.ok) {
-
-            childrenList.innerHTML =
-                "<p>Unable to load children.</p>";
+            childrenList.textContent =
+                data.message || "Failed to load children.";
 
             return;
-
         }
 
-
-        if (
-            !data.children ||
-            data.children.length === 0
-        ) {
-
-            childrenList.innerHTML =
-                "<p>No children added yet.</p>";
-
+        if (!data.children || data.children.length === 0) {
+            childrenList.textContent = "No children found. Please add a child.";
             updateChildDropdown([]);
-
             return;
-
         }
-
 
         childrenList.innerHTML = "";
 
+        data.children.forEach((child) => {
+            const childCard = document.createElement("div");
+            childCard.className = "child-card";
 
-        data.children.forEach(function (child) {
+            const name = document.createElement("h3");
+            name.textContent = child.name;
 
-            const item =
-                document.createElement("div");
+            const dob = document.createElement("p");
+            dob.textContent =
+                "Date of Birth: " + formatDate(child.dateOfBirth);
 
-            item.className =
-                "data-item";
+            const gender = document.createElement("p");
+            gender.textContent = "Gender: " + child.gender;
 
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.addEventListener("click", () => {
+                updateChild(child);
+            });
 
-            item.innerHTML = `
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener("click", () => {
+                deleteChild(child._id);
+            });
 
-                <h3>${child.name}</h3>
+            childCard.appendChild(name);
+            childCard.appendChild(dob);
+            childCard.appendChild(gender);
+            childCard.appendChild(editButton);
+            childCard.appendChild(deleteButton);
 
-                <p>
-                    <strong>Date of Birth:</strong>
-                    ${formatDate(child.dateOfBirth)}
-                </p>
-
-                <p>
-                    <strong>Gender:</strong>
-                    ${child.gender}
-                </p>
-
-            `;
-
-
-            childrenList.appendChild(item);
-
+            childrenList.appendChild(childCard);
         });
 
+        updateChildDropdown(data.children);
 
-        updateChildDropdown(
-            data.children
-        );
-
+        console.log("Children displayed successfully!");
 
     } catch (error) {
+        console.error("Error loading children:", error);
 
-        console.log(error);
-
-        childrenList.innerHTML =
-            "<p>Unable to connect to server.</p>";
-
+        childrenList.textContent =
+            "Unable to load children. Please try again.";
     }
-
 }
 
 

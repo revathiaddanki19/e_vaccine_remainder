@@ -310,6 +310,71 @@ async function loadChildren() {
 // EDIT CHILD - NEW FUNCTION
 // ========================================
 
+function getChildDateOfBirth(child) {
+    const storedDateOfBirth = String(child.dateOfBirth || "");
+    const dateOfBirth = storedDateOfBirth.slice(0, 10);
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateOfBirth)) {
+        return dateOfBirth;
+    }
+
+    const parsedDate = new Date(storedDateOfBirth);
+    return Number.isNaN(parsedDate.getTime())
+        ? ""
+        : parsedDate.toISOString().slice(0, 10);
+}
+
+function openChildEditor(child) {
+    return new Promise(function (resolve) {
+        const overlay = document.createElement("div");
+        overlay.className = "edit-overlay";
+
+        const form = document.createElement("form");
+        form.className = "edit-form";
+        form.innerHTML = `
+            <h2>Edit Child</h2>
+            <label for="editChildName">Child Name</label>
+            <input id="editChildName" type="text" required value="${child.name}">
+            <label for="editChildDate">Date of Birth</label>
+            <input id="editChildDate" type="date" required value="${getChildDateOfBirth(child)}">
+            <label for="editChildGender">Gender</label>
+            <select id="editChildGender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+            <div class="edit-form-actions">
+                <button type="button" class="secondary-btn" id="cancelChildEdit">Cancel</button>
+                <button type="submit" class="btn">Save Changes</button>
+            </div>
+        `;
+
+        overlay.appendChild(form);
+        document.body.appendChild(overlay);
+
+        const genderInput = form.querySelector("#editChildGender");
+        genderInput.value = child.gender;
+
+        function close(result) {
+            overlay.remove();
+            resolve(result);
+        }
+
+        form.querySelector("#cancelChildEdit").addEventListener("click", function () {
+            close(null);
+        });
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            close({
+                name: form.querySelector("#editChildName").value.trim(),
+                dateOfBirth: form.querySelector("#editChildDate").value,
+                gender: genderInput.value
+            });
+        });
+    });
+}
+
 async function updateChild(child) {
     try {
         const token = getToken();
@@ -320,22 +385,10 @@ async function updateChild(child) {
             return;
         }
 
-        const name = prompt("Enter child name:", child.name);
-        if (name === null) return;
+        const values = await openChildEditor(child);
+        if (!values) return;
 
-        const dateOfBirth = prompt(
-            "Enter date of birth (YYYY-MM-DD):",
-            child.dateOfBirth.substring(0, 10)
-        );
-        if (dateOfBirth === null) return;
-
-        const gender = prompt(
-            "Enter gender (Male/Female/Other):",
-            child.gender
-        );
-        if (gender === null) return;
-
-        if (!name.trim() || !dateOfBirth.trim() || !gender.trim()) {
+        if (!values.name || !values.dateOfBirth || !values.gender) {
             alert("Please enter all child details.");
             return;
         }
@@ -349,14 +402,24 @@ async function updateChild(child) {
                     "Authorization": "Bearer " + token
                 },
                 body: JSON.stringify({
-                    name: name.trim(),
-                    dateOfBirth: dateOfBirth.trim(),
-                    gender: gender.trim()
+                    name: values.name,
+                    dateOfBirth: values.dateOfBirth,
+                    gender: values.gender
                 })
             }
         );
 
-        const data = await response.json();
+        const responseText = await response.text();
+        let data;
+
+        try {
+            data = JSON.parse(responseText);
+        } catch (parseError) {
+            throw new Error(
+                "The server returned an invalid response (" + response.status + ")."
+            );
+        }
+
         console.log("Update child response:", data);
 
         if (!response.ok) {
@@ -369,7 +432,7 @@ async function updateChild(child) {
 
     } catch (error) {
         console.error("Update child error:", error);
-        alert("Unable to update child. Check Console.");
+        alert(error.message || "Unable to update child.");
     }
 }
 
